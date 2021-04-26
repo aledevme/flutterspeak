@@ -7,7 +7,7 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-
+  String filterSelected = 'Todos';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,7 +18,8 @@ class _HomeState extends State<Home> {
             children: [
               Header(),
               helloMessage(name: 'Alejandro', message: 'Exploremos fotografias'),
-              searchField()
+              searchField(),
+              filters()
             ],
           ),
         )
@@ -92,5 +93,33 @@ class _HomeState extends State<Home> {
         ),
       ),
     );
+  }
+
+  Widget filters(){
+    return Container(
+      padding: EdgeInsets.only(
+        top: 20,
+        left: 30
+      ),
+      child: Wrap(
+        spacing:20,
+        children: ['Todos', 'Mas visitados', 'Recomendaciones'].map((e) => GestureDetector(
+          onTap: () => changeFilter(e),
+          child: Container(
+            child:  Text(e, style: TextStyle(
+              fontSize: 16,
+              color: e == filterSelected ? Colors.orange[700] : Colors.grey,
+              fontWeight: FontWeight.w500
+            )),
+          ),
+        )).toList(),
+      ),
+    );
+  }
+
+  void changeFilter(String option){
+    setState(() {
+      filterSelected = option;
+    });
   }
 }

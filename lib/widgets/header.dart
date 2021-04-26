@@ -42,7 +42,7 @@ class Header extends StatelessWidget {
                   borderRadius: BorderRadius.circular(50),
                   border: Border.all(
                     width: 2,
-                    color: Colors.orange[100]
+                    color: Colors.orange[500]
                   )
                 ),
                 child: Icon(Icons.notifications_outlined, size: 28, color: Colors.orange[800]),
@@ -55,7 +55,7 @@ class Header extends StatelessWidget {
                   borderRadius: BorderRadius.circular(50),
                   border: Border.all(
                     width: 2,
-                    color: Colors.orange[200],
+                    color: Colors.orange[500],
                   )
                 ),
                 child: Icon(Icons.camera_outlined, size: 28, color: Colors.orange[800]),
