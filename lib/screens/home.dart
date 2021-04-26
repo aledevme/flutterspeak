@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutterspeak/widgets/header.dart';
 class Home extends StatefulWidget {
   static final String route = '/';
   @override
@@ -10,9 +11,15 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Text('Home Page'),
-      ),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              Header()
+            ],
+          ),
+        )
+      )
     );
   }
 }
