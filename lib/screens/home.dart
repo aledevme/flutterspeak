@@ -14,12 +14,38 @@ class _HomeState extends State<Home> {
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Header()
+              Header(),
+              helloMessage(name: 'Alejandro', message: 'Exploremos fotografias')
             ],
           ),
         )
       )
     );
   }
+
+  Widget helloMessage({@required String name, @required String message}){
+    return Container(
+        padding: EdgeInsets.symmetric(
+          horizontal: 30,
+          vertical: 20
+        ),
+        child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text('Hey, $name!', style: TextStyle(
+            fontSize: 25
+          )),
+          SizedBox(height: 10),
+          Text(message, style: TextStyle(
+            fontSize: 30,
+            fontWeight: FontWeight.w700
+          )),
+        ],
+      ),
+    );
+  }
+
+  
 }
