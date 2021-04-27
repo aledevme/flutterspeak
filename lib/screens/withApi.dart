@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutterspeak/models/Post.dart';
+import 'package:flutterspeak/services/apiService.dart';
 import 'package:flutterspeak/widgets/header.dart';
 class WithAPI extends StatefulWidget {
   static final String route = '/withApi';
@@ -8,6 +10,8 @@ class WithAPI extends StatefulWidget {
 
 class _WithAPIState extends State<WithAPI> {
 
+  ApiService apiService = ApiService();
+  
   bool withAPI = false;
   
   String filterSelected = 'Todos';
@@ -27,6 +31,7 @@ class _WithAPIState extends State<WithAPI> {
               searchField(),
               filters(),
               sliderOfImages()
+              
             ],
           ),
         )
@@ -136,81 +141,89 @@ class _WithAPIState extends State<WithAPI> {
   }
 
   Widget sliderOfImages(){
-    return Container(
-      padding: EdgeInsets.only(
-        top: 30,
-      ),
-      height: 500,
-      width: double.infinity,
-      child: ListView.builder(
-        padding: EdgeInsets.symmetric(
-          vertical: 20,
-          horizontal: 30
-        ),
-        itemCount: 20,
-        scrollDirection: Axis.horizontal,
-        itemBuilder: (BuildContext context, int index){
+
+    return FutureBuilder(
+      future: apiService.getPosts(),
+      builder: (BuildContext context, AsyncSnapshot<List<Post>> snapshot){
+        if(snapshot.hasData){
+          return Container(
+              padding: EdgeInsets.only(
+                top: 30,
+              ),
+              height: 450,
+              width: double.infinity,
+              child: ListView.builder(
+                padding: EdgeInsets.symmetric(
+                  vertical: 20,
+                  horizontal: 30
+                ),
+                itemCount: snapshot.data.length,
+                scrollDirection: Axis.horizontal,
+                itemBuilder: (BuildContext context, int index){
+                  final Post post = snapshot.data[index];
+                  return Container(
+                    margin: EdgeInsets.only(
+                      right:20 
+                    ),
+                    padding: EdgeInsets.all(15),
+                    width: 230,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(10),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.2),
+                          spreadRadius: 1,
+                          blurRadius: 20,
+                          offset: Offset(2,7), // changes position of shadow
+                        ),
+                      ]
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(10),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.5),
+                                spreadRadius: 1,
+                                blurRadius: 10,
+                                offset: Offset(0,8), // changes position of shadow
+                              ),
+                            ]
+                          ),
+                          child: ClipRRect(
+                          borderRadius: BorderRadius.circular(10),
+                            child: FadeInImage(
+                              height: 300,
+                              fit: BoxFit.cover,
+                              placeholder: AssetImage('assets/loading.gif'),
+                              image: NetworkImage(post.src['large2x']),
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 30),
+                        Text(post.photographer)
+                      ],
+                    )
+                  );
+                },
+              ),
+            );
+        }else{
           return Container(
             margin: EdgeInsets.only(
-              right:20 
+              top: 50
             ),
-            padding: EdgeInsets.all(15),
-            width: 230,
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(10),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.grey.withOpacity(0.2),
-                  spreadRadius: 1,
-                  blurRadius: 20,
-                  offset: Offset(2,7), // changes position of shadow
-                ),
-              ]
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(10),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.withOpacity(0.5),
-                        spreadRadius: 1,
-                        blurRadius: 10,
-                        offset: Offset(0,8), // changes position of shadow
-                      ),
-                    ]
-                  ),
-                  child: ClipRRect(
-                  borderRadius: BorderRadius.circular(10),
-                    child: FadeInImage(
-                      height: 300,
-                      fit: BoxFit.cover,
-                      placeholder: AssetImage('assets/loading.gif'),
-                      image: NetworkImage('https://images.pexels.com/photos/7316648/pexels-photo-7316648.jpeg?auto=compress&cs=tinysrgb&h=650&w=940'),
-                    ),
-                  ),
-                ),
-                SizedBox(height: 30),
-                Text('Lugar 1',),
-                SizedBox(height: 10),
-                Row(
-                  children: [
-                    Icon(Icons.location_on_outlined),
-                    Text('Madripur, España')
-                  ],
-                )
-              ],
-            )
+            width: double.infinity,
+            alignment: Alignment.center,
+            child: CircularProgressIndicator()
           );
-        },
-      ),
+        }
+      },
     );
   }
-
-
-
 }

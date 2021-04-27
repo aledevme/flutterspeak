@@ -8,18 +8,20 @@ class ListOfOptions extends StatefulWidget {
 class _ListOfOptionsState extends State<ListOfOptions> {
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: ListView(
-        children: [
-          ListTile(
-            title: Text('Demostrativo - Sin API'),
-            onTap: () => Navigator.pushNamed(context, '/withoutApi'),
-          ),
-          ListTile(
-            title: Text('Demostrativo - Con API'),
-            onTap: () => Navigator.pushNamed(context, '/withApi'),
-          )
-        ],
+    return Scaffold(
+      body: SafeArea(
+        child: ListView(
+          children: [
+            ListTile(
+              title: Text('Demostrativo - Sin API'),
+              onTap: () => Navigator.pushNamed(context, '/withoutApi'),
+            ),
+            ListTile(
+              title: Text('Demostrativo - Con API'),
+              onTap: () => Navigator.pushNamed(context, '/withApi'),
+            )
+          ],
+        ),
       ),
     );
   }
