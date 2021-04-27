@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutterspeak/widgets/header.dart';
-class Home extends StatefulWidget {
-  static final String route = '/withoutApi';
+class WithAPI extends StatefulWidget {
+  static final String route = '/withApi';
   @override
-  _HomeState createState() => _HomeState();
+  _WithAPIState createState() => _WithAPIState();
 }
 
-class _HomeState extends State<Home> {
+class _WithAPIState extends State<WithAPI> {
 
   bool withAPI = false;
   
