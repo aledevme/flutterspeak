@@ -11,7 +11,10 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
+      body: Container(
+        padding: EdgeInsets.symmetric(
+          vertical: 30
+        ),
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -19,7 +22,8 @@ class _HomeState extends State<Home> {
               Header(),
               helloMessage(name: 'Alejandro', message: 'Exploremos fotografias'),
               searchField(),
-              filters()
+              filters(),
+              sliderOfImages()
             ],
           ),
         )
@@ -27,6 +31,7 @@ class _HomeState extends State<Home> {
     );
   }
 
+  //hello message
   Widget helloMessage({@required String name, @required String message}){
     return Container(
         padding: EdgeInsets.symmetric(
@@ -49,6 +54,7 @@ class _HomeState extends State<Home> {
     );
   }
 
+  //searchfield
   Widget searchField(){
     return Container(
       margin: EdgeInsets.symmetric(
@@ -95,6 +101,8 @@ class _HomeState extends State<Home> {
     );
   }
 
+
+  //filter widget
   Widget filters(){
     return Container(
       padding: EdgeInsets.only(
@@ -122,4 +130,68 @@ class _HomeState extends State<Home> {
       filterSelected = option;
     });
   }
+
+  Widget sliderOfImages(){
+    return Container(
+      padding: EdgeInsets.only(
+        top: 30,
+      ),
+      height: 500,
+      width: double.infinity,
+      child: ListView.builder(
+        padding: EdgeInsets.symmetric(
+          vertical: 20,
+          horizontal: 30
+        ),
+        itemCount: 20,
+        scrollDirection: Axis.horizontal,
+        itemBuilder: (BuildContext context, int index){
+          return Container(
+            margin: EdgeInsets.only(
+              right:20 
+            ),
+            padding: EdgeInsets.all(15),
+            width: 230,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(10),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.2),
+                  spreadRadius: 1,
+                  blurRadius: 20,
+                  offset: Offset(2,7), // changes position of shadow
+                ),
+              ]
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(10),
+                  child: FadeInImage(
+                    height: 300,
+                    fit: BoxFit.cover,
+                    placeholder: AssetImage('assets/loading.gif'),
+                    image: NetworkImage('https://images.pexels.com/photos/7316648/pexels-photo-7316648.jpeg?auto=compress&cs=tinysrgb&h=650&w=940'),
+                  ),
+                ),
+                SizedBox(height: 20),
+                Text('Lugar 1',),
+                Row(
+                  children: [
+                    Icon(Icons.pin_drop),
+                    Text('Madripur, España')
+                  ],
+                )
+              ],
+            )
+          );
+        },
+      ),
+    );
+  }
+
+
+
 }
